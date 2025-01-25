@@ -4,7 +4,7 @@ export default function Player({ name, symbol }) {
   const [isEditing, setIsEditing] = useState(false);
 
   function handleEdit() {
-    setIsEditing((editing) => !isEditing); // React docs say to pass a function to setState when the new state depends on the previous state
+    setIsEditing((editing) => !editing); // React docs say to pass a function to setState when the new state depends on the previous state
   }
 
   let btnText = "Edit";
