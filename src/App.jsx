@@ -8,19 +8,26 @@ import Log from "./Components/log";
 const XSymbol = "X";
 const OSymbol = "O";
 
+function retrieveCurrentPlayer(gameTurns) {
+  let currentPlayer = XSymbol;
+
+  if (gameTurns.length > 0 && gameTurns[0].player === XSymbol) {
+    currentPlayer = OSymbol;
+  }
+
+  return currentPlayer;
+}
+
 function App() {
-  const [activePlayer, setActivePlayer] = useState(XSymbol);
   const [gameTurns, setGameTurns] = useState([]);
+
+  const currentPlayer = retrieveCurrentPlayer(gameTurns);
 
   function handleSelectSquare(rowIndex, colIndex) {
     setActivePlayer((player) => (player === XSymbol ? OSymbol : XSymbol));
 
     setGameTurns((prevTurns) => {
-      let currentPlayer = XSymbol;
-
-      if (prevTurns.length > 0 && prevTurns[0].player === XSymbol) {
-        currentPlayer = OSymbol;
-      }
+      const currentPlayer = retrieveCurrentPlayer(prevTurns);
 
       const updatedTurns = [
         { square: { row: rowIndex, col: colIndex }, player: currentPlayer },
@@ -40,12 +47,12 @@ function App() {
             <Player
               initialName="Player 1"
               symbol="X"
-              isActive={activePlayer === XSymbol}
+              isActive={currentPlayer === XSymbol}
             />
             <Player
               initialName="Player 2"
               symbol="O"
-              isActive={activePlayer === OSymbol}
+              isActive={currentPlayer === OSymbol}
             />
           </ol>
           <GameBoard onSelectSquare={handleSelectSquare} turns={gameTurns} />
