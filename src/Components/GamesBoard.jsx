@@ -6,7 +6,7 @@ const initialGameBoard = [
   [null, null, null],
 ];
 
-export default function GameBoard() {
+export default function GameBoard({ onSelectSquare, activePlayerSymbol }) {
   const [gameBoard, setGameBoard] = useState(initialGameBoard);
 
   function handlePlay(rowIndex, colIndex) {
@@ -15,10 +15,12 @@ export default function GameBoard() {
         ...prevGameBoard.map((innerArray) => [...innerArray]),
       ]; // in javascript, this is the recommend way to create a deep copy of a 2D array avoid mutating the original array
 
-      updatedGameBoard[rowIndex][colIndex] = "X";
+      updatedGameBoard[rowIndex][colIndex] = activePlayerSymbol;
 
       return updatedGameBoard;
     });
+
+    onSelectSquare();
   }
 
   return (
