@@ -24,8 +24,6 @@ function App() {
   const currentPlayer = retrieveCurrentPlayer(gameTurns);
 
   function handleSelectSquare(rowIndex, colIndex) {
-    setActivePlayer((player) => (player === XSymbol ? OSymbol : XSymbol));
-
     setGameTurns((prevTurns) => {
       const currentPlayer = retrieveCurrentPlayer(prevTurns);
 
