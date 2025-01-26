@@ -1,27 +1,34 @@
-import React, { useState } from "react";
-
 const initialGameBoard = [
   [null, null, null],
   [null, null, null],
   [null, null, null],
 ];
 
-export default function GameBoard({ onSelectSquare, activePlayerSymbol }) {
-  const [gameBoard, setGameBoard] = useState(initialGameBoard);
+export default function GameBoard({ onSelectSquare, turns }) {
+  let gameBoard = initialGameBoard;
 
-  function handlePlay(rowIndex, colIndex) {
-    setGameBoard((prevGameBoard) => {
-      let updatedGameBoard = [
-        ...prevGameBoard.map((innerArray) => [...innerArray]),
-      ]; // in javascript, this is the recommend way to create a deep copy of a 2D array avoid mutating the original array
+  for (let turn of turns) {
+    const { square, player } = turn;
+    const { row, col } = square;
 
-      updatedGameBoard[rowIndex][colIndex] = activePlayerSymbol;
-
-      return updatedGameBoard;
-    });
-
-    onSelectSquare();
+    gameBoard[row][col] = player;
   }
+
+  // const [gameBoard, setGameBoard] = useState(initialGameBoard);
+
+  // function handlePlay(rowIndex, colIndex) {
+  //   setGameBoard((prevGameBoard) => {
+  //     let updatedGameBoard = [
+  //       ...prevGameBoard.map((innerArray) => [...innerArray]),
+  //     ]; // in javascript, this is the recommend way to create a deep copy of a 2D array avoid mutating the original array
+
+  //     updatedGameBoard[rowIndex][colIndex] = activePlayerSymbol;
+
+  //     return updatedGameBoard;
+  //   });
+
+  //   onSelectSquare();
+  // }
 
   return (
     <>
@@ -31,7 +38,7 @@ export default function GameBoard({ onSelectSquare, activePlayerSymbol }) {
             <ol>
               {row.map((playSymbol, colIndex) => (
                 <li key={colIndex}>
-                  <button onClick={() => handlePlay(rowIndex, colIndex)}>
+                  <button onClick={() => onSelectSquare(rowIndex, colIndex)}>
                     {playSymbol}
                   </button>
                 </li>
